@@ -1,26 +1,25 @@
 #pragma once
-class Process
-{
 #include <string>
 #include <vector>
 	constexpr int MAX_PROCESSES = 100;
 	constexpr int NOT_STARTED = -1;
 
 	struct Process {
-		std::string id;
+		std::string id = "";
+		
 		// Du lieu dau vao 
-		int arrivalTime; 
-		int burstTime;   
+		int arrivalTime = 0; 
+		int burstTime = 0;   
 
 		// Du lieu trong luc mo phong 
-		int remainingTime;
-		int firstRunTime;
+		int remainingTime = 0;
+		int firstRunTime = -1;
 
 		// Ket qua 
-		int completionTime; 
-		int turnaroundTime; 
-		int waitingTime;    
-		int responseTime;   
+		int completionTime = 0; 
+		int turnaroundTime = 0; 
+		int waitingTime = 0;    
+		int responseTime = 0;   
 	};
 
 	// Cac ham nhap du lieu
