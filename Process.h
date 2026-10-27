@@ -8,19 +8,19 @@ class Process
 
 	struct Process {
 		std::string id;
-		// Du lieu dau vao (Nguoi 1)
-		int arrivalTime; // AT
-		int burstTime;   // BT
+		// Du lieu dau vao 
+		int arrivalTime; 
+		int burstTime;   
 
-		// Du lieu trong luc mo phong (Nguoi 2)
+		// Du lieu trong luc mo phong 
 		int remainingTime;
 		int firstRunTime;
 
-		// Ket qua (Nguoi 3)
-		int completionTime; // CT
-		int turnaroundTime; // TAT = CT - AT
-		int waitingTime;    // WT = TAT - BT
-		int responseTime;   // RT = firstRunTime - AT
+		// Ket qua 
+		int completionTime; 
+		int turnaroundTime; 
+		int waitingTime;    
+		int responseTime;   
 	};
 
 	// Cac ham nhap du lieu

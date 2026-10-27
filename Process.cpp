@@ -1,6 +1,6 @@
 #include "Process.h"
 
-#include <sstream> 
+#include <sstream>
 #include <algorithm>
 #include <cstdlib>
 #include <iomanip>
