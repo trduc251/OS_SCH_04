@@ -8,14 +8,14 @@
 
 using namespace std;
 
-const int MAX_TIME = 1000000; // Gioi han tren cua AT va BT
+const int MAX_TIME = 1000000; 
 
 static int docSoNguyen(const string& prompt, int minValue, int maxValue) {
 	while (true) {
 		cout << prompt;
 
 		string line;
-		if (!getline(cin, line)) exit(1); // Het du lieu dau vao thi thoat
+		if (!getline(cin, line)) exit(1); 
 
 		istringstream input(line);
 		int value;
