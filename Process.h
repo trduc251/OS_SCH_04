@@ -1,35 +1,32 @@
-#pragma once
+#pragma once  
 #include <string>
 #include <vector>
-	constexpr int MAX_PROCESSES = 100;
-	constexpr int NOT_STARTED = -1;
 
-	struct Process {
-		std::string id = "";
-		
-		// Du lieu dau vao 
-		int arrivalTime = 0; 
-		int burstTime = 0;   
+using namespace std;
 
-		// Du lieu trong luc mo phong 
-		int remainingTime = 0;
-		int firstRunTime = -1;
+const int MAX_PROCESSES = 100;
+const int NOT_STARTED = -1;
 
-		// Ket qua 
-		int completionTime = 0; 
-		int turnaroundTime = 0; 
-		int waitingTime = 0;    
-		int responseTime = 0;   
-	};
 
-	// Cac ham nhap du lieu
-	int nhapSoLuongTienTrinh();
+struct Process {
 
-	Process nhapTienTrinh(int stt, const std::vector<Process>& danhSachDaNhap);
-	std::vector<Process> nhapDanhSachTienTrinh();
+    string id;
+    int arrivalTime = 0;
+    int burstTime = 0;
 
-	// Cac ham tien ich cho nhom
-	Process taoTienTrinh(const std::string& id, int arrivalTime, int burstTime);
-	void datLaiTienTrinh(std::vector<Process>& danhSach);
-	void sapXepTheoArrivalTime(std::vector<Process>& danhSach);
-	void inDanhSachTienTrinh(const std::vector<Process>& danhSach);
+
+    int remainingTime = 0;
+    int firstRunTime = -1;
+
+    int completionTime = 0;
+    int turnaroundTime = 0;
+    int waitingTime = 0;
+    int responseTime = 0;
+};
+int inputNumberOfProcesses();
+Process inputProcess(int index, const vector<Process>& existingProcesses);
+vector<Process> inputProcessList();
+Process createProcess(const string& id, int arrivalTime, int burstTime);
+void resetProcesses(vector<Process>& processes);
+void sortByArrivalTime(vector<Process>& processes);
+void printProcessList(const vector<Process>& processes);

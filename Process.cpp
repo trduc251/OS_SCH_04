@@ -1,6 +1,4 @@
 #include "Process.h"
-
-#include <sstream>
 #include <algorithm>
 #include <cstdlib>
 #include <iomanip>
@@ -8,109 +6,105 @@
 
 using namespace std;
 
-const int MAX_TIME = 1000000; 
+static int readInteger(const string& prompt, int minValue, int maxValue) {
+    int value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
 
-static int docSoNguyen(const string& prompt, int minValue, int maxValue) {
-	while (true) {
-		cout << prompt;
+        if (cin.eof()) exit(1);
 
-		string line;
-		if (!getline(cin, line)) exit(1); 
-
-		istringstream input(line);
-		int value;
-		char extra;
-
-		if (!(input >> value) || (input >> extra)) {
-			cout << " [Loi] Vui long nhap mot so nguyen. \n";
-		}
-		else if (value < minValue || value > maxValue) {
-			cout << " [Loi] Gia tri phai tu " << minValue << " den " << maxValue << ".\n";
-		}
-		else {
-			return value;
-		}
-	}
-}
-static bool maDaTonTai(const string& id, const vector<Process>& danhSach) {
-	for (const Process& tienTrinh : danhSach) {
-		if (tienTrinh.id == id) return true;
-	}
-	return false;
-}
-
-int nhapSoLuongTienTrinh() {
-	return docSoNguyen("Nhap so luong tien trinh: ", 1, MAX_PROCESSES);
-}
-
-Process nhapTienTrinh(int stt, const vector<Process>& danhSachDaNhap) {
-	cout << "\nTien trinh thu " << stt << "\n";
-
-	string id;
-	while (true) {
-		cout << "Ma tien trinh (vi du P" << stt << "): ";
-		if (!getline(cin, id)) exit(1);
-
-		if (id.empty() || id.find(' ') != string::npos) {
-			cout << " [Loi] Ma tien trinh khong duoc de trong hoac chua khoang trong. \n";
-		}
-		else if (maDaTonTai(id, danhSachDaNhap)) {
-			cout << " [Loi] Ma ' " << id << " ' da ton tai, vui long nhap ma khac.\n";
-		}
-		else {
-			break;
-		}
-	}
-
-	int arrivalTime = docSoNguyen("Arrival Time (AT): ", 0, MAX_TIME);
-	int burstTime = docSoNguyen("CPU Burst (BT): ", 1, MAX_TIME);
-
-	return taoTienTrinh(id, arrivalTime, burstTime);
-}
-vector<Process> nhapDanhSachTienTrinh() {
-	int soLuong = nhapSoLuongTienTrinh();
-
-	vector<Process> danhSach;
-	for (int i = 1; i <= soLuong; i++) {
-		danhSach.push_back(nhapTienTrinh(i, danhSach));
-	}
-	return danhSach;
- }
-
-Process taoTienTrinh(const string& id, int arrivalTime, int burstTime) {
-	Process tienTrinh;
-	tienTrinh.id = id;
-	tienTrinh.arrivalTime = arrivalTime;
-	tienTrinh.burstTime = burstTime;
-	tienTrinh.remainingTime = burstTime;
-	tienTrinh.firstRunTime = NOT_STARTED;
-	tienTrinh.completionTime = 0;
-	tienTrinh.turnaroundTime = 0;
-	tienTrinh.waitingTime = 0;
-	tienTrinh.responseTime = 0;
-	return  tienTrinh;
-}
-
-void datLaiTienTrinh(vector<Process>& danhSach) {
-	for (Process& tienTrinh : danhSach) {
-		tienTrinh = taoTienTrinh(tienTrinh.id, tienTrinh.arrivalTime, tienTrinh.burstTime);
+        if (cin.fail()) {
+            cin.clear();
+            cout << "  [Loi] Vui long nhap mot so nguyen.\n";
+        }
+        else if (value < minValue || value > maxValue) {
+            cout << "  [Loi] Gia tri phai tu " << minValue << " den " << maxValue << ".\n";
+        }
+        else {
+            cin.ignore(1000, '\n');
+            return value;
+        }
+        cin.ignore(1000, '\n');
     }
 }
 
-void sapXepTheoArrivalTime(vector<Process>& danhSach) {
-	stable_sort(danhSach.begin(), danhSach.end(),
-		[](const Process& a, const Process& b) {
-			return a.arrivalTime < b.arrivalTime;
-		});
+static bool isIdExisted(const string& id, const vector<Process>& processes) {
+    for (const Process& process : processes) {
+        if (process.id == id) return true;
+    }
+    return false;
 }
 
-void inDanhSachTienTrinh(const vector<Process>& danhSach) {
-	cout << "\nDANH SACH TIEN TRINH\n";
-	cout << left << setw(10) << "Ma TT" << setw(15) << "Arrival Time" << "CPU Burst\n";
-	cout << string(35, '-') << "\n";
+int inputNumberOfProcesses() {
+    return readInteger("Nhap so luong tien trinh: ", 1, MAX_PROCESSES);
+}
 
-	for (const Process& tienTrinh : danhSach) {
-		cout << left << setw(10) << tienTrinh.id
-			<< setw(15) << tienTrinh.arrivalTime << tienTrinh.burstTime << "\n";
-	}
+Process inputProcess(int index, const vector<Process>& existingProcesses) {
+    cout << "\n Tien trinh thu " << index << " \n";
+
+    string id;
+    while (true) {
+        cout << "Ma tien trinh (vi du P" << index << "): ";
+        cin >> id;
+        if (cin.eof()) exit(1);
+        cin.ignore(1000, '\n');
+
+        if (!isIdExisted(id, existingProcesses)) break;
+        cout << "  [Loi] Ma '" << id << "' da ton tai, hay nhap ma khac.\n";
+    }
+
+    int arrivalTime = readInteger("Arrival Time (AT): ", 0, 1000000);
+    int burstTime = readInteger("CPU Burst (BT): ", 1, 1000000);
+
+    return createProcess(id, arrivalTime, burstTime);
+}
+
+vector<Process> inputProcessList() {
+    int numberOfProcesses = inputNumberOfProcesses();
+
+    vector<Process> processes;
+    for (int i = 1; i <= numberOfProcesses; i++) {
+        processes.push_back(inputProcess(i, processes));
+    }
+    return processes;
+}
+
+Process createProcess(const string& id, int arrivalTime, int burstTime) {
+    Process process;
+    process.id = id;
+    process.arrivalTime = arrivalTime;
+    process.burstTime = burstTime;
+    process.remainingTime = burstTime;
+    process.firstRunTime = NOT_STARTED;
+    process.completionTime = 0;
+    process.turnaroundTime = 0;
+    process.waitingTime = 0;
+    process.responseTime = 0;
+    return process;
+}
+
+void resetProcesses(vector<Process>& processes) {
+    for (Process& process : processes) {
+        process = createProcess(process.id, process.arrivalTime, process.burstTime);
+    }
+}
+
+void sortByArrivalTime(vector<Process>& processes) {
+    stable_sort(processes.begin(), processes.end(),
+        [](const Process& a, const Process& b) {
+            return a.arrivalTime < b.arrivalTime;
+        });
+}
+
+void printProcessList(const vector<Process>& processes) {
+    cout << "\n DANH SACH TIEN TRINH \n";
+    cout << left << setw(10) << "Ma TT" << setw(15) << "Arrival Time" << "CPU Burst\n";
+    cout << string(35, '-') << "\n";
+
+    for (const Process& process : processes) {
+        cout << left << setw(10) << process.id
+            << setw(15) << process.arrivalTime
+            << process.burstTime << "\n";
+    }
 }
