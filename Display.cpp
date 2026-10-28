@@ -13,7 +13,7 @@ void displayGanttChart(const vector<ExecutionSeg>& history)
 	cout << history[0].startTime;
 	for (const ExecutionSeg& seg : history)
 	{
-		cout << " | " << seg.procesID << " | " << seg.endTime;
+		cout << " | " << seg.processID << " | " << seg.endTime;
 	}
 };
 void displayResults(const vector<Process>& processes)
@@ -48,17 +48,17 @@ int countContextSwitches(const vector<ExecutionSeg>& history)
 	string previousProcess = "";
 	for (const ExecutionSeg& seg : history)
 	{
-		if (seg.Process.id == "IDLE")
+		if (seg.processID == "IDLE")
 		{
 			continue;
 
 		}
-		if (previousProcess != seg.process.ID != previousProcess)
+		if (previousProcess != "" && seg.processID != previousProcess)
 		{
 			count++;
 
 		}
-		previousProcess = seg.process.ID;
+		previousProcess = seg.processID;
 	}
 	return count;
 
