@@ -43,5 +43,6 @@ AverageMetrics calculateAverageMetrics(const vector<Process>& processes) {
 	avg.averageWT = averageWT(processes);
 	avg.averageTAT =averageTAT(processes);
 	avg.averageRT = averageRT(processes);
+
 	return avg;
 }
