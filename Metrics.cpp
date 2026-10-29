@@ -1,6 +1,6 @@
 #include "Metrics.h"
 
-void calculatemetrics(vector<Process>& processes) {
+void calculateMetrics(vector<Process>& processes) {
 	for (Process& p : processes)
 	{
 		p.turnaroundTime = p.completionTime - p.arrivalTime;

@@ -27,12 +27,12 @@ void Comparison::runAllTestCases() {
 		for (int q : quantums) {
 			vector<Process> procs = tc.second;
 			vector<ExecutionSeg> history = runRoundRobin(procs, q);
-			calculateMectrics(procs);
+			calculateMetrics(procs);
 			int csCount = 0;
-			string lastProcs = "";
+			string lastProc = "";
 			for (const auto& seg : history) {
-				if (seg.processIF != "IDLE") {
-					if (!lastProc.emty() && lastProc != seg.processID) cs Count++;
+				if (seg.processID != "IDLE") {
+					if (!lastProc.empty() && lastProc != seg.processID) csCount++;
 					lastProc = seg.processID;
 				}
 			}
