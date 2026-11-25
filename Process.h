@@ -4,16 +4,13 @@
 
 using namespace std;
 
-const int MAX_PROCESSES = 100;
+const int MAX_PROCESSES = 30000;
 const int NOT_STARTED = -1;
 
-
 struct Process {
-
     string id;
     int arrivalTime = 0;
     int burstTime = 0;
-
 
     int remainingTime = 0;
     int firstRunTime = -1;
@@ -23,9 +20,11 @@ struct Process {
     int waitingTime = 0;
     int responseTime = 0;
 };
+
 int inputNumberOfProcesses();
 Process inputProcess(int index, const vector<Process>& existingProcesses);
 vector<Process> inputProcessList();
+vector<Process> loadProcessesFromFile(const string& filename); 
 Process createProcess(const string& id, int arrivalTime, int burstTime);
 void resetProcesses(vector<Process>& processes);
 void sortByArrivalTime(vector<Process>& processes);
