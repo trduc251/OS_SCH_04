@@ -20,7 +20,6 @@ struct Process {
     int waitingTime = 0;
     int responseTime = 0;
 };
-
 int inputNumberOfProcesses();
 Process inputProcess(int index, const vector<Process>& existingProcesses);
 vector<Process> inputProcessList();
