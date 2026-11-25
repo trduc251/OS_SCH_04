@@ -9,7 +9,16 @@ using namespace std;
 const double CS_COST = 0.1;
 
 void Comparison::runAllTestCases() {
-	vector<int> quantums = { 1,2,4 };
+	int numQuantums = 0;
+	while (true) {
+		cout << "Nhap so luong gia tri Quantum (q) muon kiem tra: ";
+		if (cin >> numQuantum && numQuantum > 0) {
+			break;
+		}
+		cout << "Gia tri khong hop le! Vui long nhap so nguyen duong.\n";
+		cin.cleanr();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	}
 
 	vector<pair<string, vector<Process>>> testCases = {
 		{ "1. Chi co 1 tien trinh",{ createProcess("P1",0,6) } },
