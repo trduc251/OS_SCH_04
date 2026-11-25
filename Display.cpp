@@ -18,7 +18,7 @@ void displayGanttChart(const vector<ExecutionSeg>& history)
 };
 void displayResults(const vector<Process>& processes)
 {
-	cout << "\n ==========Ket Qua==========" << endl;
+	cout << "\n ==========Ket Qua========== \n" << endl;
 	cout << left << setw(10) << "PID" << setw(8) << "AT" << setw(8) << "BT" << setw(8) << "CT" << setw(8) << "TAT" << setw(8) << "WT" << setw(8) << "RT" << endl;
 	double sumWT = 0;
 	double sumTAT = 0;
