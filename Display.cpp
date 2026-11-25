@@ -9,6 +9,7 @@ void displayGanttChart(const vector<ExecutionSeg>& history)
 	if (history.empty())
 	{
 		cout << "Khong co du lieu de hien thi " << endl;
+		return;
 	}
 	cout << history[0].startTime;
 	for (const ExecutionSeg& seg : history)
