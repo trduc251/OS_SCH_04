@@ -16,7 +16,7 @@ void Comparison::runAllTestCases() {
 			break;
 		}
 		cout << "Gia tri khong hop le! Vui long nhap so nguyen duong.\n";
-		cin.cleanr();
+		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
