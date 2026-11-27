@@ -30,7 +30,7 @@ int main() {
         cout << "  Mo phong Ready Queue va Context Switch\n";
         cout << "1. Nhap danh sach tien trinh tu ban phim va mo phong\n";
         cout << "2. Doc danh sach tien trinh tu file (.txt) va mo phong\n";
-        cout << "3. Chay test Case so sanh Quantum (1, 2, 4) va phan tich OverHead\n";
+        cout << "3. Chay test Case so sanh Quantum va phan tich OverHead\n";
         cout << "4. Thoat\n";
         cout << "Nhap lua chon: ";
         if (!(cin >> luachon)) {
@@ -56,7 +56,7 @@ int main() {
         }
         case 2: {
             string filename;
-            cout << "Nhap ten file du lieu :  ";
+            cout << "Nhap ten file du lieu (.txt):  ";
             getline(cin, filename);
 
             vector<Process> processes = loadProcessesFromFile(filename);
